@@ -1,0 +1,31 @@
+import speech_recognition as sr
+
+from src.talk import Talk
+from src.think import Think
+
+
+class AI:
+
+    def __init__(self, config):
+        self.talk = Talk(model=config.get("talk_model"))
+        self.listen = sr.Recognizer()
+        self.think = Think(
+            model=config.get("think_model"),
+            url=config.get("url"))
+
+    def run(self):
+        while True:
+            try:
+                with sr.Microphone() as mic:
+                    self.listen.adjust_for_ambient_noise(mic, duration=0.2)
+                    audio = self.listen.listen(mic)
+                    text = self.listen.recognize_google(audio)
+                    print(text)
+                    if text in ["quite", "exit", "close"]:
+                        break
+                    ai_answer = self.think.run(prompt=text)
+                    self.talk.run(ai_answer)
+            except sr.RequestError as e:
+                print("Could not request results; {0}".format(e))
+            except sr.UnknownValueError:
+                print("unknown error occurred")

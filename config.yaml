@@ -1,0 +1,7 @@
+
+# think.py
+url : "http://localhost:11434/api/generate"
+think_model : "llama2-uncensored"
+
+# talk.py
+talk_model : "tts_models/en/jenny/jenny"

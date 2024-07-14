@@ -1,0 +1,5 @@
+TTS
+pygame
+speechrecognition
+pyaudio
+pyyaml
