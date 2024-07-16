@@ -1,17 +1,15 @@
 from speech_recognition import Recognizer, Microphone, RequestError, UnknownValueError
 
 from src.talker import Talker
-from src.thinker import Thinker
+from src.thinker import ThinkerLMStudio as Thinker
 
 
 class AI:
 
     def __init__(self, config):
-        self.talk = Talker(model=config.get("talk_model"))
+        self.talk = Talker(config)
         self.listen = Recognizer()
-        self.think = Thinker(
-            model=config.get("think_model"),
-            url=config.get("url"))
+        self.think = Thinker(config)
 
     def run(self):
         while True:

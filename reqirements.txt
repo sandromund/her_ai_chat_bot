@@ -3,3 +3,4 @@ pygame
 speechrecognition
 pyaudio
 pyyaml
+openai

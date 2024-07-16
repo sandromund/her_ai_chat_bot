@@ -5,10 +5,11 @@ from TTS.api import TTS
 
 class Talker:
 
-    def __init__(self, model):
+    def __init__(self, config):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.file_path = "output.wav"
-        self.tts = TTS(model_name=model, progress_bar=False).to(self.device)
+        self.model = config["Talker"]["model"]
+        self.file_path = config["Talker"]["file_path"]
+        self.tts = TTS(model_name=self.model, progress_bar=False).to(self.device)
 
     def __play_audio(self):
         pg.mixer.init()

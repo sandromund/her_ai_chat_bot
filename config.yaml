@@ -1,7 +1,13 @@
-
-# think.py
-url : "http://localhost:11434/api/generate"
-think_model : "llama2-uncensored"
-
-# talk.py
-talk_model : "tts_models/en/jenny/jenny"
+Thinker:
+  Ollama:
+    url : "http://localhost:11434/api/generate"
+    model : "llama2-uncensored"
+  LMStudio:
+    base_url : "http://localhost:1234/v1"
+    api_key: "lm-studio"
+    model : "TheBloke/CapybaraHermes-2.5-Mistral-7B-GGUF"
+    system_role : "Playful girlfriend who wants to know more about me."
+    temperature : 0.7
+Talker:
+  model : "tts_models/en/jenny/jenny"
+  file_path : "output.wav"
