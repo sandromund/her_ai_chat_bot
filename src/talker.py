@@ -3,7 +3,7 @@ import torch
 from TTS.api import TTS
 
 
-class Talk:
+class Talker:
 
     def __init__(self, model):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

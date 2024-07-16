@@ -1,15 +1,15 @@
-import speech_recognition as sr
+from speech_recognition import Recognizer
 
-from src.talk import Talk
-from src.think import Think
+from src.talker import Talker
+from src.thinker import Thinker
 
 
 class AI:
 
     def __init__(self, config):
-        self.talk = Talk(model=config.get("talk_model"))
-        self.listen = sr.Recognizer()
-        self.think = Think(
+        self.talk = Talker(model=config.get("talk_model"))
+        self.listen = Recognizer()
+        self.think = Thinker(
             model=config.get("think_model"),
             url=config.get("url"))
 

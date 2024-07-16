@@ -1,7 +1,7 @@
 import requests
 
 
-class Think:
+class Thinker:
 
     def __init__(self, url, model):
         self.url = url
