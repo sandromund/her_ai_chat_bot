@@ -20,9 +20,9 @@ class AI:
                 with Microphone() as mic:
                     self.listen.adjust_for_ambient_noise(mic, duration=0.2)
                     audio = self.listen.listen(mic)
-                    text = self.listen.recognize_google(audio)
+                    text = self.listen.recognize_sphinx(audio)  # self.listen.recognize_google(audio)
                     print(text)
-                    if text in ["quite", "exit", "close"]:
+                    if text in ["quit", "exit", "close"]:
                         self.think.save_history()
                         break
                     ai_answer = self.think.run(prompt=text)
