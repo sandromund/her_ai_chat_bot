@@ -1,4 +1,4 @@
-from speech_recognition import Recognizer
+from speech_recognition import Recognizer, Microphone
 
 from src.talker import Talker
 from src.thinker import Thinker
@@ -16,7 +16,7 @@ class AI:
     def run(self):
         while True:
             try:
-                with sr.Microphone() as mic:
+                with Microphone() as mic:
                     self.listen.adjust_for_ambient_noise(mic, duration=0.2)
                     audio = self.listen.listen(mic)
                     text = self.listen.recognize_google(audio)
