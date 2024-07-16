@@ -14,13 +14,13 @@ ollama run llama2-uncensored
 
 OR use [LM Studio](https://lmstudio.ai/) and run a Local Inference Server
 
-The thinker import in [src/ai.py]() needs to be adapted if u change the LLM.
+The thinker import in src/ai.py needs to be adapted if u change the LLM.
 
 ````python
 from src.thinker import ThinkerLMStudio as Thinker
 ````
 
-Adapt the [config.yaml]() if necessary and run the main.
+Adapt the config.yaml if necessary and run the main.
 
 ````shell
 python main.py
