@@ -10,6 +10,8 @@ Thinker:
     personality_file : "resources/personality.txt"
     temperature : 0.7
     history_dir : "resources/history"
+    history_buffer_size : 5
+    load_history : False
 Talker:
   model : "tts_models/en/jenny/jenny"
   file_path : "output.wav"

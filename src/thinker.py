@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 import time
 
@@ -29,19 +30,24 @@ class ThinkerLMStudio:
         self.base_url = think["base_url"]
         self.api_key = think["api_key"]
         self.model = think["model"]
-        self.system_role = think["system_role"]
-        self.temperature = think["temperature"]
+
+        self.temperature: float = think["temperature"]
         self.history_dir = think["history_dir"]
         self.personality_file = think["personality_file"]
-
+        self.do_load_history: bool = think["load_history"]
+        self.history_buffer_size: int = think["history_buffer_size"]
         self.client = OpenAI(base_url=self.base_url, api_key=self.api_key)
-        self.history = [{"role": "system", "content": self.system_role}]
+        self.system_role = [{"role": "system", "content": think["system_role"]}]
+        self.personality_data = []
+        self.history = []
 
     def run(self, prompt: str) -> str:
         self.history.append({"role": "user", "content": prompt})
+        history_buffer = self.history[-self.history_buffer_size]
+        history_buffer = self.system_role + self.personality_data + history_buffer
         completion = self.client.chat.completions.create(
             model=self.model,
-            messages=self.history,
+            messages=history_buffer,
             temperature=self.temperature)
         message = completion.choices[0].message.content
         self.history.append({"role": "assistant", "content": message})
@@ -59,9 +65,13 @@ class ThinkerLMStudio:
         return os.path.join(self.history_dir, most_recent_file)
 
     def load_history(self):
+        if not self.do_load_history:
+            return
         if len(os.listdir(self.history_dir)) < 1:
             return
-        with open(self.__get_most_recent_file(), 'r') as file:
+        file = self.__get_most_recent_file()
+        logging.info("Loading history in %s", file)
+        with open(file, 'r') as file:
             self.history += json.load(file)
 
     def save_history(self):
@@ -70,6 +80,8 @@ class ThinkerLMStudio:
             file.write(json.dumps(self.history))
 
     def load_personality(self):
+        if not os.path.isfile(self.personality_file):
+            return
         with open(self.personality_file, 'r') as file:
             personality_data = file.read()
-        self.history += [{"role": "system", "content": personality_data}]
+        self.personality_data = [{"role": "system", "content": personality_data}]
