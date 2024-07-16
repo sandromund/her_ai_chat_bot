@@ -26,9 +26,10 @@ class AI:
                         self.think.save_history()
                         break
                     ai_answer = self.think.run(prompt=text)
+                    print(ai_answer)
                     ai_answer_filtered = ai_answer.split("###")[0]
                     self.talk.run(ai_answer_filtered)
             except RequestError as e:
                 print("Could not request results; {0}".format(e))
             except UnknownValueError:
-                print("unknown error occurred")
+                continue
