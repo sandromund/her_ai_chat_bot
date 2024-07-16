@@ -6,7 +6,7 @@ Thinker:
     base_url : "http://localhost:1234/v1"
     api_key: "lm-studio"
     model : "TheBloke/CapybaraHermes-2.5-Mistral-7B-GGUF"
-    system_role : "Playful girlfriend who wants to know more about me."
+    system_role : "keep your answers short and ask questions."
     personality_file : "resources/personality.txt"
     temperature : 0.7
     history_dir : "resources/history"
