@@ -1,4 +1,4 @@
-from speech_recognition import Recognizer, Microphone
+from speech_recognition import Recognizer, Microphone, RequestError, UnknownValueError
 
 from src.talker import Talker
 from src.thinker import Thinker
@@ -15,6 +15,7 @@ class AI:
 
     def run(self):
         while True:
+            print("listening ... ")
             try:
                 with Microphone() as mic:
                     self.listen.adjust_for_ambient_noise(mic, duration=0.2)
@@ -25,7 +26,7 @@ class AI:
                         break
                     ai_answer = self.think.run(prompt=text)
                     self.talk.run(ai_answer)
-            except sr.RequestError as e:
+            except RequestError as e:
                 print("Could not request results; {0}".format(e))
-            except sr.UnknownValueError:
+            except UnknownValueError:
                 print("unknown error occurred")
