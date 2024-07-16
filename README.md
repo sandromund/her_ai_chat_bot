@@ -33,15 +33,13 @@ use e.g. [Mistral](https://huggingface.co/TheBloke/CapybaraHermes-2.5-Mistral-7B
 Follow a [guide](https://www.youtube.com/watch?v=hGHgMUWC3GI) and inspect http://localhost:7860/?__theme=dark .
 
 ## Next
+- Finetune LLM 
+  - Fine Tuning
+    - https://www.youtube.com/watch?v=rANv5BVcR5k
 - Add a knowledge base / RAG
+  - https://www.youtube.com/watch?v=c_nCjlSB1Zk
 - Improve Speach Recognition
   - https://github.com/oliverguhr/wav2vec2-live
   - https://www.youtube.com/watch?v=k6nIxWGdrS4
   - https://www.youtube.com/watch?v=2kSPbH4jWME
 - German Support / Change to German
-
-
-``````
-git submodule add https://github.com/oliverguhr/wav2vec2-live.git libs/wav2vec2-live
-
-``````
