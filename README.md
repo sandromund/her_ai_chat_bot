@@ -36,4 +36,12 @@ Follow a [guide](https://www.youtube.com/watch?v=hGHgMUWC3GI) and inspect http:/
 - Add a knowledge base / RAG
 - Improve Speach Recognition
   - https://github.com/oliverguhr/wav2vec2-live
+  - https://www.youtube.com/watch?v=k6nIxWGdrS4
+  - https://www.youtube.com/watch?v=2kSPbH4jWME
 - German Support / Change to German
+
+
+``````
+git submodule add https://github.com/oliverguhr/wav2vec2-live.git libs/wav2vec2-live
+
+``````
