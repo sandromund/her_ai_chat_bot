@@ -43,7 +43,7 @@ class ThinkerLMStudio:
 
     def run(self, prompt: str) -> str:
         self.history.append({"role": "user", "content": prompt})
-        history_buffer = self.history[-self.history_buffer_size]
+        history_buffer = self.history[-self.history_buffer_size:]
         history_buffer = self.system_role + self.personality_data + history_buffer
         completion = self.client.chat.completions.create(
             model=self.model,
