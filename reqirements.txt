@@ -5,3 +5,4 @@ pyaudio
 pyyaml
 openai
 # pocketsphinx
+# faster-whisper
