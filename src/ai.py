@@ -29,7 +29,6 @@ class AI:
                     print(user_text)
                     if user_text in ["quit", "exit", "close"]:
                         self.think.save()
-                        self.think.memorize(exit_mode=True)
                         break
                     ai_answer = self.think.run(prompt=user_text)
                     print(ai_answer)
