@@ -7,7 +7,22 @@ import requests
 from openai import OpenAI
 
 
-class ThinkerOllama:
+class Thinker:
+
+    def run(self, prompt: str) -> str:
+        pass
+
+    def load(self):
+        pass
+
+    def save(self):
+        pass
+
+    def memorize(self):
+        pass
+
+
+class ThinkerOllama(Thinker):
 
     def __init__(self, config):
         self.url = config["Thinker"]["Ollama"]["url"]
@@ -23,7 +38,7 @@ class ThinkerOllama:
         return response.get("response")
 
 
-class ThinkerLMStudio:
+class ThinkerLMStudio(Thinker):
 
     def __init__(self, config):
         think = config["Thinker"]["LMStudio"]
@@ -56,7 +71,7 @@ class ThinkerLMStudio:
         message = completion.choices[0].message.content
         self.history.append({"role": "assistant", "content": message})
         self.memory_buffer.append({"role": "user", "content": prompt})
-        self.memory_buffer.append({"role": "user", "content": prompt})
+        self.memory_buffer.append({"role": "assistant", "content": message})
         return message
 
     def __get_most_recent_file(self):
@@ -113,7 +128,6 @@ class ThinkerLMStudio:
     def save_memory(self, new_file_name=None):
         if new_file_name is None:
             new_file_name = str(int(time.time())) + ".txt"
-        self.memorize_chat()
         with open(os.path.join(self.memory_dir, new_file_name), 'w') as file:
             file.write(self.memory)
         self.memory_buffer = []
@@ -121,7 +135,7 @@ class ThinkerLMStudio:
     def save(self):
         new_file_name = str(int(time.time())) + ".txt"
         self.save_history(new_file_name=new_file_name)
-        self.save_memory(new_file_name=new_file_name)
+        self.memorize(exit_mode=True)
 
     def load_personality(self):
         if not os.path.isfile(self.personality_file):
@@ -130,7 +144,7 @@ class ThinkerLMStudio:
             personality_data = file.read()
         self.personality_data = [{"role": "system", "content": personality_data}]
 
-    def memorize_chat(self):
+    def summarize_chat(self):
         sys = [{"role": "system", "content": self.summarize_prompt}]
         completion = self.client.chat.completions.create(
             model=self.model,
@@ -143,5 +157,5 @@ class ThinkerLMStudio:
     def memorize(self, exit_mode: bool = False):
         if not exit_mode or len(self.memory_buffer) >= self.history_buffer_size:
             return
-        self.memorize_chat()
+        self.summarize_chat()
         self.save_memory()
