@@ -43,6 +43,7 @@ class ThinkerLMStudio:
         self.memory = ""
         self.summarize_prompt = ""
         self.summarize_prompt_file = think["summarize_prompt"]
+        self.memory_buffer = []
 
     def run(self, prompt: str) -> str:
         self.history.append({"role": "user", "content": prompt})
@@ -54,6 +55,8 @@ class ThinkerLMStudio:
             temperature=self.temperature)
         message = completion.choices[0].message.content
         self.history.append({"role": "assistant", "content": message})
+        self.memory_buffer.append({"role": "user", "content": prompt})
+        self.memory_buffer.append({"role": "user", "content": prompt})
         return message
 
     def __get_most_recent_file(self):
@@ -113,6 +116,7 @@ class ThinkerLMStudio:
         self.memorize_chat()
         with open(os.path.join(self.memory_dir, new_file_name), 'w') as file:
             file.write(self.memory)
+        self.memory_buffer = []
 
     def save(self):
         new_file_name = str(int(time.time())) + ".txt"
@@ -130,7 +134,14 @@ class ThinkerLMStudio:
         sys = [{"role": "system", "content": self.summarize_prompt}]
         completion = self.client.chat.completions.create(
             model=self.model,
-            messages=sys + self.history,
+            messages=sys + self.memory_buffer,
             temperature=self.temperature)
         self.memory = completion.choices[0].message.content
+        print(self.summarize_prompt)
         print(self.memory)
+
+    def memorize(self, exit_mode: bool = False):
+        if not exit_mode or len(self.memory_buffer) >= self.history_buffer_size:
+            return
+        self.memorize_chat()
+        self.save_memory()
