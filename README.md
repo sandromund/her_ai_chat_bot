@@ -2,7 +2,7 @@
 
 This AI runs locally and can be spoken to directly via microphone.
 
-This runs on my toaster (Windows 10, 16GB RAM, AMD Ryzen 5, NVIDA GeForce RTX 2070 Super).
+This runs on my toaster (Windows 10, 16GB RAM, AMD Ryzen 5, NVIDIA GeForce RTX 2070 Super).
 
 ## Run
 
