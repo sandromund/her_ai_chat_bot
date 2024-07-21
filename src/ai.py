@@ -1,4 +1,5 @@
 from speech_recognition import Recognizer, Microphone, RequestError, UnknownValueError
+import speech_recognition as sr
 
 from src.talker import Talker
 from src.thinker import ThinkerLMStudio as Thinker
@@ -10,25 +11,28 @@ class AI:
         self.talk = Talker(config)
         self.listen = Recognizer()
         self.think = Thinker(config)
+        self.device_index = config["Recognizer"]["microphone_device_index"]
 
     def run(self):
-        self.think.load_history()
-        self.think.load_personality()
+        mics = {}
+        for index, name in enumerate(sr.Microphone.list_microphone_names()):
+            mics[index] = name
+            print(index, "->", name)
+        self.think.load()
         while True:
-            print("listening ... ")
             try:
-                with Microphone() as mic:
+                with Microphone(device_index=self.device_index) as mic:
+                    print(f"listening ... ({mics.get(mic.device_index)})")
                     self.listen.adjust_for_ambient_noise(mic, duration=0.2)
                     audio = self.listen.listen(mic)
-                    text = self.listen.recognize_google(audio)
-                    print(text)
-                    if text in ["quit", "exit", "close"]:
-                        self.think.save_history()
+                    user_text = self.listen.recognize_google(audio)
+                    print(user_text)
+                    if user_text in ["quit", "exit", "close"]:
+                        self.think.save()
                         break
-                    ai_answer = self.think.run(prompt=text)
+                    ai_answer = self.think.run(prompt=user_text)
                     print(ai_answer)
-                    ai_answer_filtered = ai_answer.split("###")[0]
-                    self.talk.run(ai_answer_filtered)
+                    self.talk.run(ai_answer)
             except RequestError as e:
                 print("Could not request results; {0}".format(e))
             except UnknownValueError:

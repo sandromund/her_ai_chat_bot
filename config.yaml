@@ -6,12 +6,16 @@ Thinker:
     base_url : "http://localhost:1234/v1"
     api_key: "lm-studio"
     model : "TheBloke/CapybaraHermes-2.5-Mistral-7B-GGUF"
-    system_role : "keep your answers short and ask questions."
-    personality_file : "resources/personality.txt"
+    personality_file : "resources/personalities/anna.txt"
     temperature : 0.7
     history_dir : "resources/history"
-    history_buffer_size : 5
+    history_buffer_size : 10
     load_history : False
+    load_memory : True
+    memory_dir : "resources/memories"
+    summarize_prompt  :  "resources/prompts/summarizing.txt"
 Talker:
   model : "tts_models/en/jenny/jenny"
   file_path : "output.wav"
+Recognizer:
+  microphone_device_index : 1

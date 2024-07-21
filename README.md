@@ -34,8 +34,7 @@ Follow a [guide](https://www.youtube.com/watch?v=hGHgMUWC3GI) and inspect http:/
 
 ## Next
 - Finetune LLM 
-  - Fine Tuning
-    - https://www.youtube.com/watch?v=rANv5BVcR5k
+  - https://www.youtube.com/watch?v=rANv5BVcR5k
 - Add a knowledge base / RAG
   - https://www.youtube.com/watch?v=c_nCjlSB1Zk
 - Improve Speach Recognition
@@ -43,3 +42,10 @@ Follow a [guide](https://www.youtube.com/watch?v=hGHgMUWC3GI) and inspect http:/
   - https://www.youtube.com/watch?v=k6nIxWGdrS4
   - https://www.youtube.com/watch?v=2kSPbH4jWME
 - German Support / Change to German
+
+
+## Nice to know
+A lot different voices are accessible 
+````shell
+tts --list_models
+````
